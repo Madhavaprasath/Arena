@@ -2,11 +2,15 @@ extends KinematicBody2D
 
 export (int) var speed=200
 export (int) var health=100
-export (int) var damage=20
+export (Vector2) var damage_vector=Vector2(20,40)
 export (int) var acc=20
 var states={}
 var current_state
 var previous_state
+
+signal update_health_bar(damage)
+func _ready():
+	randomize()
 
 func _physics_process(delta):
 	state_logic(delta)
@@ -27,4 +31,14 @@ func enter_state(old_state,new_state):
 	pass
 
 func exit_state(old_state,new_state):
+	pass
+
+func take_damage(damage):
+	var Damage=rand_range(damage_vector.x,damage_vector.y)
+	health-=Damage
+	emit_signal("update_health_bar",Damage)
+	if health<=0:
+		die()
+
+func die():
 	pass
