@@ -1,0 +1,99 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Actor/Actor.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Actor/Player/Player.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/GladiatorSpriteSheet.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Ui4.png" type="Texture" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Idle"
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 2, 3 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Run"
+length = 1.1
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 18, 19, 34, 35, 50, 51 ]
+}
+
+[node name="Player" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+speed = 300
+
+[node name="Body" parent="." index="0"]
+scale = Vector2( 2.5, 2.5 )
+
+[node name="Sprite" parent="Body" index="0"]
+texture = ExtResource( 3 )
+vframes = 8
+hframes = 8
+frame = 18
+
+[node name="AnimationPlayer" parent="Body" index="1"]
+anims/Idle = SubResource( 1 )
+anims/Run = SubResource( 2 )
+
+[node name="Items" type="Node2D" parent="Body" index="2"]
+
+[node name="Sword" type="Sprite" parent="Body/Items" index="0"]
+
+[node name="Bow" type="Sprite" parent="Body/Items" index="1"]
+
+[node name="Staff" type="Sprite" parent="Body/Items" index="2"]
+
+[node name="UI" type="Node2D" parent="." index="2"]
+position = Vector2( 3.78404, 60.965 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sword" type="Sprite" parent="UI" index="0"]
+position = Vector2( -64, 0 )
+texture = ExtResource( 4 )
+vframes = 2
+hframes = 3
+
+[node name="Bow" type="Sprite" parent="UI" index="1"]
+texture = ExtResource( 4 )
+vframes = 2
+hframes = 3
+frame = 1
+
+[node name="Staff" type="Sprite" parent="UI" index="2"]
+position = Vector2( 64, 0 )
+texture = ExtResource( 4 )
+vframes = 2
+hframes = 3
+frame = 2
+
+[node name="Selector" type="Sprite" parent="UI" index="3"]
+texture = ExtResource( 4 )
+vframes = 2
+hframes = 3
+frame = 3
+
+[node name="Tween" type="Tween" parent="UI" index="4"]
