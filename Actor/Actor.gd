@@ -37,8 +37,7 @@ func take_damage(damage):
 	var Damage=rand_range(damage_vector.x,damage_vector.y)
 	health-=Damage
 	emit_signal("update_health_bar",Damage)
-	if health<=0:
-		die()
+
 
 func die():
 	pass
