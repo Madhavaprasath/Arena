@@ -1,14 +1,21 @@
 extends KinematicBody2D
 
+signal update_health_bar(damage)
+
+
 export (int) var speed=200
 export (int) var health=100
 export (Vector2) var damage_vector=Vector2(20,40)
 export (int) var acc=20
+export (int) var friction=500
+
+
 var states={}
 var current_state
 var previous_state
+var velocity=Vector2() 
+var is_being_attacked=false
 
-signal update_health_bar(damage)
 func _ready():
 	randomize()
 
@@ -34,6 +41,7 @@ func exit_state(old_state,new_state):
 	pass
 
 func take_damage(damage):
+	is_being_attacked=true
 	var Damage=rand_range(damage_vector.x,damage_vector.y)
 	health-=Damage
 	emit_signal("update_health_bar",Damage)
@@ -41,3 +49,7 @@ func take_damage(damage):
 
 func die():
 	pass
+
+
+func _on_Healthbar_on_updated():
+	is_being_attacked=false
