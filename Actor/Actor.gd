@@ -6,7 +6,7 @@ signal update_health_bar(damage)
 export (int) var speed=200
 export (int) var health=100
 export (Vector2) var damage_vector=Vector2(20,40)
-export (int) var acc=20
+export (int) var acc=200
 export (int) var friction=500
 
 

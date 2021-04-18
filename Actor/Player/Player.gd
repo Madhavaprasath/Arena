@@ -24,8 +24,6 @@ func _init():
 #parent functions
 func state_logic(delta):
 	apply_movement(delta)
-	position.x=clamp(position.x,0,1000)
-	position.y=clamp(position.y,0,600)
 func transition(delta):
 	return null
 
@@ -47,24 +45,13 @@ func apply_movement(delta:float)->void:
 	input_vector=input_vector.normalized()
 	knock_back_vector=input_vector
 	if input_vector!=Vector2.ZERO:
-		velocity+=input_vector*acc
-		check_velocity(velocity)
+		velocity+=input_vector*acc*delta
+		check_velocity()
 	else:
-		velocity=lerp(velocity,Vector2(),1)
+		velocity=velocity.move_toward(Vector2(),friction*delta)
 	move_and_slide(velocity)
 
 
-func check_velocity(velocity:Vector2)->void:
-	if abs(velocity.x)>speed:
-		if velocity.x<0:
-			velocity.x=-speed
-		else:
-			velocity.x=speed
-	if abs(velocity.y)>speed/2:
-		if velocity.y<0:
-			velocity.y=-speed/2
-		else:
-			velocity.y=speed/2
-
-func deaccerlarate(velocity):
-	velocity=Vector2()
+func check_velocity()->void:
+	velocity.x=clamp(velocity.x,-speed,speed)
+	velocity.y=clamp(velocity.y,-speed,speed)
