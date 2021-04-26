@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Actor/Actor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Actor/Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://Actor/Player/Weapons.gd" type="Script" id=3]
+[ext_resource path="res://Weapons/Player/Sword_player.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Idle"
@@ -11,8 +12,9 @@ resource_name = "Idle"
 resource_name = "Run"
 
 [node name="Player" instance=ExtResource( 1 )]
+position = Vector2( 1, 0 )
 script = ExtResource( 2 )
-speed = 500
+speed = 400
 friction = 200
 
 [node name="AnimationPlayer" parent="Body" index="1"]
@@ -21,3 +23,7 @@ anims/Run = SubResource( 2 )
 
 [node name="Weapons" parent="." index="2"]
 script = ExtResource( 3 )
+
+[node name="Sword_player" parent="Weapons" index="0" instance=ExtResource( 4 )]
+
+[editable path="Weapons/Sword_player"]

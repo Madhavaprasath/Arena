@@ -63,3 +63,4 @@ func apply_movement(delta:float)->void:
 func check_velocity()->void:
 	velocity.x=clamp(velocity.x,-speed,speed)
 	velocity.y=clamp(velocity.y,-speed,speed)
+
