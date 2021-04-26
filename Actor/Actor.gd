@@ -16,6 +16,7 @@ var previous_state
 var velocity=Vector2() 
 var is_being_attacked=false
 
+onready var animation_player=get_node("Body/AnimationPlayer")
 func _ready():
 	randomize()
 

@@ -11,7 +11,11 @@ func _unhandled_input(event):
 			'Staff':event.is_action_pressed("T")}
 	for i in modes.keys():
 		if modes[i]:
-			print(i)
+			for j in get_children():
+				if i==j.name:
+					j.enabled=true
+				else:
+					j.enabled=false
 
 func give_damage():
 	pass

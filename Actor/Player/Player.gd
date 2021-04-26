@@ -1,9 +1,10 @@
 extends "res://Actor/Actor.gd"
 
 
-var knock_back_vector=Vector2()
-var input_vector=Vector2()
-var action={'Left':Input.is_action_pressed("ui_left"),
+var knock_back_vector:Vector2=Vector2()
+var input_vector:Vector2=Vector2()
+
+var action:Dictionary={'Left':Input.is_action_pressed("ui_left"),
 			'Right':Input.is_action_pressed("ui_right"),
 			'Up':Input.is_action_pressed("ui_up"),
 			'Down':Input.is_action_pressed("ui_down"),
@@ -19,16 +20,26 @@ func _init():
 			5:"Pickup",
 			6:"Dead"}
 
-
+func _ready():
+	current_state=states[1]
 
 #parent functions
 func state_logic(delta):
 	apply_movement(delta)
+	if current_state in ["Idle"]:
+		velocity=velocity.move_toward(Vector2.ZERO,friction*delta)
 func transition(delta):
+	match current_state:
+		"Idle":
+			if input_vector!=Vector2():
+				return states[2]
+		"Run":
+			if input_vector==Vector2():
+				return states[1]
 	return null
 
 func enter_state(old_state,new_state):
-	pass
+	animation_player.play(new_state)
 
 func exit_state(old_state,new_state):
 	pass
@@ -47,10 +58,7 @@ func apply_movement(delta:float)->void:
 	if input_vector!=Vector2.ZERO:
 		velocity+=input_vector*acc*delta
 		check_velocity()
-	else:
-		velocity=velocity.move_toward(Vector2(),friction*delta)
 	move_and_slide(velocity)
-
 
 func check_velocity()->void:
 	velocity.x=clamp(velocity.x,-speed,speed)

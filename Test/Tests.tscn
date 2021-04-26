@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Weapons/Player/Sword_player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Test/Area2D.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[node name="Tests" type="Node2D"]
+
+[node name="Sword_player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 145.477, 30.9659 )
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( 194.808, 32.5269 )
+collision_layer = 16
+collision_mask = 0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 1 )
+[connection signal="area_entered" from="Area2D" to="Area2D" method="_on_Area2D_area_entered"]
