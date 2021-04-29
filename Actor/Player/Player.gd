@@ -12,6 +12,8 @@ var action:Dictionary={'Left':Input.is_action_pressed("ui_left"),
 			'R':Input.is_action_pressed("R"),
 			'T':Input.is_action_pressed("T")}
 
+var direction=0
+
 func _init():
 	states={1:"Idle",
 			2:"Run",
@@ -26,7 +28,8 @@ func _ready():
 #parent functions
 func state_logic(delta):
 	apply_movement(delta)
-	if current_state in ["Idle"]:
+	flip_character()
+	if input_vector==Vector2():
 		velocity=velocity.move_toward(Vector2.ZERO,friction*delta)
 func transition(delta):
 	match current_state:
@@ -64,3 +67,7 @@ func check_velocity()->void:
 	velocity.x=clamp(velocity.x,-speed,speed)
 	velocity.y=clamp(velocity.y,-speed,speed)
 
+func flip_character():
+	direction=int(Input.is_action_pressed("ui_right"))-int(Input.is_action_pressed("ui_left"))
+	if direction!=0:
+		$Body.scale.x=direction*1.5
